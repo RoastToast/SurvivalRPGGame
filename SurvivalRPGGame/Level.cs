@@ -19,6 +19,17 @@ namespace SurvivalRPGGame
             TileSheet = new List<List<Tile>>();
             Entities = new List<Entity>();
         }
+
+        public void AddEntity(Entity e)
+        {
+            _addEntity(e);
+        }
+
+        private void _addEntity(Entity e)
+        {
+            this.Entities.Add(e);
+        }
+
         public void Update()
         {
             UpdateEntities();
