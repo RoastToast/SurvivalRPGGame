@@ -7,6 +7,10 @@ namespace SurvivalRPGGame
 {
     public class Potato : Crop
     {
+        public Potato()
+        {
+            this._texture = Art.Potato;
+        }
         public Potato(Vector2 Position)
         {
             this._texture = Art.Potato;

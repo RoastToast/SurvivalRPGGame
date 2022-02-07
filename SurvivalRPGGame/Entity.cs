@@ -17,6 +17,10 @@ namespace SurvivalRPGGame
         public bool isExpired { get; set; }
 
 
+        public Vector2 GetTile()
+        {
+            return MathUtil.GetTile(this.Position, Tile.Width, Tile.Height);
+        }
 
         public abstract void Update();
 
