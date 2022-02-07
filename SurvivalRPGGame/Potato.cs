@@ -7,7 +7,7 @@ namespace SurvivalRPGGame
 {
     public class Potato : Crop
     {
-        public override Crop Instance()
+        public override Crop GetInstance()
         {
             return new Potato();
         }
@@ -22,6 +22,11 @@ namespace SurvivalRPGGame
 
             this.Position = Position;
         }
+        public override Item Harvest(Tool tool)
+        {
+            return new Item(false, null, true, GetInstance());
+        }
+
         public override void Update()
         {
             

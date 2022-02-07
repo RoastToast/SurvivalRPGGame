@@ -6,17 +6,32 @@ namespace SurvivalRPGGame
 {
     public struct Item
     {
-        public bool isTool;
-        public Tool Tool;
-        public bool isSeed;
-        public Crop SeedCrop;
-
-        public Item(bool isTool, Tool Tool, bool isSeed, Crop SeedCrop)
+        public readonly bool IsTool;
+        public readonly Tool Tool;
+        public readonly bool isSeed;
+        public readonly Crop SeedCrop;
+        private int _count;
+        public int Count
         {
-            this.isTool = isTool;
+            readonly get => _count;
+            set => _count = value;
+        }
+
+        public Item(bool isTool, Tool Tool, bool isSeed, Crop SeedCrop, int Count)
+        {
+            this.IsTool = isTool;
             this.Tool = Tool;
             this.isSeed = isSeed;
             this.SeedCrop = SeedCrop;
+            this._count = Count;
+        }
+        public Item(bool isTool, Tool Tool, bool isSeed, Crop SeedCrop)
+        {
+            this.IsTool = isTool;
+            this.Tool = Tool;
+            this.isSeed = isSeed;
+            this.SeedCrop = SeedCrop;
+            this._count = 1;
         }
     }
 }

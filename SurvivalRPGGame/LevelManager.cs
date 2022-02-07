@@ -48,7 +48,7 @@ namespace SurvivalRPGGame
         {
             if (Input.WasKeyPressed(ConfiguredKeys[KeyFunctions.Action]))
             {
-                CurrentLevel.Action(Player.Instance.GetActiveItem(), Player.Instance.GetTile()); ;
+                CurrentLevel.Action(Player.Instance.GetActiveItem(), Player.Instance.GetTile());
             } 
             //else if (Input.WasKeyPressed(ConfiguredKeys[KeyFunctions.Action2]))
             //{

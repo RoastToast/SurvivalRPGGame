@@ -6,6 +6,7 @@ namespace SurvivalRPGGame
 {
     public class Hut : Building
     {
+
         public override void Update()
         {
             throw new NotImplementedException();

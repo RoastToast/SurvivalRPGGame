@@ -11,7 +11,5 @@ namespace SurvivalRPGGame
         Action = 2,
         Action2 = 3,
         ChangeTool = 4,
-
-
     }
 }

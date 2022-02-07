@@ -36,7 +36,7 @@ namespace SurvivalRPGGame
             this.Position = new Vector2(0, 0);
             this.Hotbar = new List<Item>();
             this.Hotbar.Add(new Item(true, null, false, null));
-            this.Hotbar.Add(new Item(false, null, true, new Potato()));
+            this.Hotbar.Add(new Item(false, null, true, new Potato(), 10));
 
             this.ActiveItem = 0;
         }
@@ -58,6 +58,52 @@ namespace SurvivalRPGGame
             {
                 Debug.Print("Active Item out of bounds! {0}", this.ActiveItem);
                 this.ActiveItem = 0;
+            }
+        }
+
+        public void AddItemToInventory(Item item)
+        {
+            int index = 0;
+
+            if (item.isSeed)
+            {
+                index = this.Hotbar.FindIndex(x => x.SeedCrop?.GetType() == item.SeedCrop.GetType());
+                if (index >= 0)
+                {
+                    item.Count += this.Hotbar[index].Count;
+                    this.Hotbar[index] = item;
+                } else
+                {
+                    index = this.Hotbar.FindIndex(x => x.Equals(new Item()));
+                    if(index >= 0)
+                    {
+                        this.Hotbar[index] = item;
+                    }
+                }
+            }
+            else if (item.IsTool)
+            {
+                index = this.Hotbar.FindIndex(x => x.Equals(new Item()));
+                if (index >= 0)
+                {
+                    this.Hotbar[index] = item;
+                }
+            }
+
+            Debug.Print("{0}", this.Hotbar[index].Count);
+        }
+
+        public void RemoveItemFromInventory(Item item, int count = 1)
+        {
+            int index = this.Hotbar.FindIndex(x => x.SeedCrop?.GetType() == item.SeedCrop.GetType());
+            if (index >= 0)
+            {
+                Item tempItem = this.Hotbar[index];
+                tempItem.Count = tempItem.Count - 1;
+                this.Hotbar[index] = tempItem;
+                Debug.Print("{0}", this.Hotbar[index].Count);
+                if (this.Hotbar[index].Count == 0)
+                    this.Hotbar[index] = new Item();
             }
         }
 
@@ -85,6 +131,5 @@ namespace SurvivalRPGGame
                 Position = new Vector2(x, y);
             }
         }
-
     }
 }

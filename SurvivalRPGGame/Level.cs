@@ -34,13 +34,24 @@ namespace SurvivalRPGGame
         //     
         public void Action(Item item, Vector2 Position)
         {
-            if (item.isTool)
+            if (item.IsTool)
             {
-                _Harvest(item.Tool, Position);
+                Entity entity = Entities.Find(x => x.Position == Position);
+                IHarvestable harvestable = entity as IHarvestable;
+                if (harvestable != null)
+                {
+                    Item HarvestedItem = _Harvest(item.Tool, harvestable);
+                    Player.Instance.AddItemToInventory(HarvestedItem);
+                    Entities.Remove(entity);
+                }
+                    
             }
             else if (item.isSeed)
             {
-                _PlantCrop(item.SeedCrop, Position);
+                if (_PlantCrop(item.SeedCrop, Position))
+                {
+                    Player.Instance.RemoveItemFromInventory(item);
+                }
             }
         }
 
@@ -49,21 +60,18 @@ namespace SurvivalRPGGame
         //     Remove the Crop
         // TODO: After player inventory implemented, add item to inventory when tool matches Crop/Object harvested
         //     
-        private void _Harvest(Tool tool, Vector2 Position)
+        private Item _Harvest(Tool tool, IHarvestable harvestable)
         {
-            Entity e = this.Entities.Find(x => x.Position == Position);
-            if (e != null)
-            {
-                this.Entities.Remove(e);
-            }
+            return(harvestable.Harvest(tool));
         }
 
         // Summary
         //     If the current tile is empty, plant a crop at the location
         //     
-        private void _PlantCrop(Crop SeedCrop, Vector2 Position)
+        private bool _PlantCrop(Crop SeedCrop, Vector2 Position)
         {
-            Crop c = SeedCrop.Instance();
+            bool Success = false;
+            Crop c = SeedCrop.GetInstance();
             c.Position = Position;
             Entity Existing = this.Entities.Find(x => x.Position == Position);
             if (Existing == null || Existing.Equals(Player.Instance))
@@ -72,14 +80,18 @@ namespace SurvivalRPGGame
                 {
                     Debug.Print("Adding {0}!", c.GetType());
                     this.Entities.Add(c);
+                    Success = true;
                 } else
                 {
                     Debug.Print("{0} is updating...", this.GetType());
                     this.AddedEntities.Add(c);
+                    Success = true;
                 }
             } else {
                 Debug.Print("Tile Already Occupied :(");
+                Success = false;
             }
+            return Success;
         }
 
         //
