@@ -14,7 +14,7 @@ namespace SurvivalRPGGame
 
     public abstract class Level
     {
-
+        protected Texture2D LevelTexture;
         protected List<List<Tile>> TileSheet;
         protected List<Entity> Entities;
         protected List<Entity> AddedEntities;
@@ -36,7 +36,7 @@ namespace SurvivalRPGGame
         {
             if (item.isTool)
             {
-                _HarvestCrop(item.Tool, Position);
+                _Harvest(item.Tool, Position);
             }
             else if (item.isSeed)
             {
@@ -49,7 +49,7 @@ namespace SurvivalRPGGame
         //     Remove the Crop
         // TODO: After player inventory implemented, add item to inventory when tool matches Crop/Object harvested
         //     
-        private void _HarvestCrop(Tool tool, Vector2 Position)
+        private void _Harvest(Tool tool, Vector2 Position)
         {
             Entity e = this.Entities.Find(x => x.Position == Position);
             if (e != null)
@@ -63,18 +63,19 @@ namespace SurvivalRPGGame
         //     
         private void _PlantCrop(Crop SeedCrop, Vector2 Position)
         {
-            SeedCrop.Position = Position;
+            Crop c = SeedCrop.Instance();
+            c.Position = Position;
             Entity Existing = this.Entities.Find(x => x.Position == Position);
             if (Existing == null || Existing.Equals(Player.Instance))
             {
                 if (!isUpdating)
                 {
-                    Debug.Print(String.Format("Adding {0}!", SeedCrop.GetType()));
-                    this.Entities.Add(SeedCrop);
+                    Debug.Print("Adding {0}!", c.GetType());
+                    this.Entities.Add(c);
                 } else
                 {
-                    Debug.Print(String.Format("{0} is updating...", this.GetType()));
-                    this.AddedEntities.Add(SeedCrop);
+                    Debug.Print("{0} is updating...", this.GetType());
+                    this.AddedEntities.Add(c);
                 }
             } else {
                 Debug.Print("Tile Already Occupied :(");
@@ -133,7 +134,7 @@ namespace SurvivalRPGGame
             }
 
             // Set isUpdating to false at the very end of Update()
-            //this.isUpdating = false;
+            this.isUpdating = false;
             // DO NOT PLACE ANY CODE AFTER THIS
         }
 

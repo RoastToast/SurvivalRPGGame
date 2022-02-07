@@ -6,5 +6,6 @@ namespace SurvivalRPGGame
 {
     public abstract class Crop : Entity
     {
+        public abstract Crop Instance();
     }
 }

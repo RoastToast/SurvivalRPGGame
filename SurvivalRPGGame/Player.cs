@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace SurvivalRPGGame
@@ -23,11 +24,41 @@ namespace SurvivalRPGGame
         // Speed of movement
         public float Speed = 10f;
 
+        // TODO: Add Inventory System
+        public List<Item> Hotbar;
+        public int ActiveItem;
+
+
         private Player()
         {
-            _texture = Art.Player;
+            this._texture = Art.Player;
 
-            Position = new Vector2(0, 0);
+            this.Position = new Vector2(0, 0);
+            this.Hotbar = new List<Item>();
+            this.Hotbar.Add(new Item(true, null, false, null));
+            this.Hotbar.Add(new Item(false, null, true, new Potato()));
+
+            this.ActiveItem = 0;
+        }
+
+        public Item GetActiveItem()
+        {
+            return this.Hotbar[ActiveItem];
+        }
+
+        public void ShiftActiveItem()
+        {
+            if(this.ActiveItem < this.Hotbar.Count-1)
+            {
+                this.ActiveItem++;
+            } else if(this.ActiveItem == this.Hotbar.Count-1)
+            {
+                this.ActiveItem = 0;
+            } else
+            {
+                Debug.Print("Active Item out of bounds! {0}", this.ActiveItem);
+                this.ActiveItem = 0;
+            }
         }
 
         public override void Update()

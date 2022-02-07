@@ -25,6 +25,7 @@ namespace SurvivalRPGGame
             ConfiguredKeys.Add(KeyFunctions.Inventory, Keys.Tab);
             ConfiguredKeys.Add(KeyFunctions.Action, Keys.E);
             ConfiguredKeys.Add(KeyFunctions.Action2, Keys.F);
+            ConfiguredKeys.Add(KeyFunctions.ChangeTool, Keys.R);
         }
 
         // TODO: Save Levels to File
@@ -47,11 +48,16 @@ namespace SurvivalRPGGame
         {
             if (Input.WasKeyPressed(ConfiguredKeys[KeyFunctions.Action]))
             {
-                CurrentLevel.Action(new Item(false, null, true, new Potato()), Player.Instance.GetTile());
-            } else if (Input.WasKeyPressed(ConfiguredKeys[KeyFunctions.Action2]))
+                CurrentLevel.Action(Player.Instance.GetActiveItem(), Player.Instance.GetTile()); ;
+            } 
+            //else if (Input.WasKeyPressed(ConfiguredKeys[KeyFunctions.Action2]))
+            //{
+            //
+            //    CurrentLevel.Action(new Item(true, null, false, null), Player.Instance.GetTile());
+            //} 
+            else if (Input.WasKeyPressed(ConfiguredKeys[KeyFunctions.ChangeTool]))
             {
-
-                CurrentLevel.Action(new Item(true, null, false, null), Player.Instance.GetTile());
+                Player.Instance.ShiftActiveItem();
             }
 
         }

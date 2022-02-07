@@ -7,6 +7,11 @@ namespace SurvivalRPGGame
 {
     public class Potato : Crop
     {
+        public override Crop Instance()
+        {
+            return new Potato();
+        }
+
         public Potato()
         {
             this._texture = Art.Potato;

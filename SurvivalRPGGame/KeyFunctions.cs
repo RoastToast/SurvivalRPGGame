@@ -9,7 +9,9 @@ namespace SurvivalRPGGame
         PauseMenu = 0,
         Inventory = 1,
         Action = 2,
-        Action2 = 3
+        Action2 = 3,
+        ChangeTool = 4,
+
 
     }
 }
