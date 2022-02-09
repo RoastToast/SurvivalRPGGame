@@ -1,4 +1,5 @@
-﻿using System;
+﻿// © 2022 David Alger <RoastToast-gh@protonmail.com>
+using System;
 
 namespace SurvivalRPGGame
 {

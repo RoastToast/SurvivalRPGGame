@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SurvivalRPGGame
 {
-    public class Effects
+    public abstract class Tool
     {
     }
 }

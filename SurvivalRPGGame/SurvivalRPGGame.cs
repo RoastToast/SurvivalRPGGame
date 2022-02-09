@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿// © 2022 David Alger <RoastToast-gh@protonmail.com>
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,6 +11,9 @@ namespace SurvivalRPGGame
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        public ScreenManager Screens { get; private set; }
+        public LevelManager Levels { get; private set; }
 
         public SurvivalRPGGame()
         {
@@ -37,10 +41,10 @@ namespace SurvivalRPGGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            this.Components.Add(this.Screens = new ScreenManager(this, new StartScreen(this)));
+            this.Components.Add(this.Levels = new LevelManager(this));
 
             base.Initialize();
-
-            LevelManager.Load();
         }
 
         protected override void LoadContent()
@@ -49,6 +53,7 @@ namespace SurvivalRPGGame
 
             // TODO: use this.Content to load your game content here
             Art.Load(Content);
+            this.Levels.Load();
         }
 
         protected override void Update(GameTime gameTime)
@@ -56,7 +61,6 @@ namespace SurvivalRPGGame
 
             // TODO: Add your update logic here
             Input.Update();
-            LevelManager.Update();
 
             if (Input.WasExitPressed())
                 Exit();
@@ -70,10 +74,11 @@ namespace SurvivalRPGGame
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            LevelManager.Draw(_spriteBatch);
+            this.Levels.Draw(_spriteBatch);
             _spriteBatch.End();
 
             base.Draw(gameTime);
         }
     }
+
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿// © 2022 David Alger <RoastToast-gh@protonmail.com>
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace SurvivalRPGGame
 {
-    public class Input
+	public class Input
     {
 		private static KeyboardState keyboardState, lastKeyboardState;
 		private static MouseState mouseState, lastMouseState;
