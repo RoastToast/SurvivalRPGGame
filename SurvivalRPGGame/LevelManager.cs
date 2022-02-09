@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,19 +10,25 @@ namespace SurvivalRPGGame
     public class LevelManager
     {
         private static Level CurrentLevel;
-
-        private static bool isUpdating;
+        private static Dictionary<KeyFunctions, Keys> ConfiguredKeys = new Dictionary<KeyFunctions, Keys>();
 
         public LevelManager()
         {
 
         }
 
+        // TODO: Load Levels from Save File
         public static void Load()
         {
             CurrentLevel = new MainIsland();
+            ConfiguredKeys.Add(KeyFunctions.PauseMenu, Keys.Escape);
+            ConfiguredKeys.Add(KeyFunctions.Inventory, Keys.Tab);
+            ConfiguredKeys.Add(KeyFunctions.Action, Keys.E);
+            ConfiguredKeys.Add(KeyFunctions.Action2, Keys.F);
+            ConfiguredKeys.Add(KeyFunctions.ChangeTool, Keys.R);
         }
 
+        // TODO: Save Levels to File
         public static void Save()
         {
 
@@ -29,38 +36,35 @@ namespace SurvivalRPGGame
 
         public static void Update()
         {
+            CheckKeyPresses();
             CurrentLevel.Update();
+        }
+
+        //
+        // Summary:
+        //     Check predefined keys and call logic for those keys
+        //
+        private static void CheckKeyPresses()
+        {
+            if (Input.WasKeyPressed(ConfiguredKeys[KeyFunctions.Action]))
+            {
+                CurrentLevel.Action(Player.Instance.GetActiveItem(), Player.Instance.GetTile());
+            } 
+            //else if (Input.WasKeyPressed(ConfiguredKeys[KeyFunctions.Action2]))
+            //{
+            //
+            //    CurrentLevel.Action(new Item(true, null, false, null), Player.Instance.GetTile());
+            //} 
+            else if (Input.WasKeyPressed(ConfiguredKeys[KeyFunctions.ChangeTool]))
+            {
+                Player.Instance.ShiftActiveItem();
+            }
+
         }
 
         public static void Draw(SpriteBatch spriteBatch)
         {
-            DrawTiles(spriteBatch);
-            DrawEntities(spriteBatch);
-        }
-
-        private static void DrawEntities(SpriteBatch spriteBatch)
-        {
-            foreach(Entity e in CurrentLevel.Entities)
-            {
-                e.Draw(spriteBatch);
-            }
-        }
-
-        private static void DrawTiles(SpriteBatch spriteBatch)
-        {
-            float x = 0;
-            float y = 0;
-
-            foreach(List<Tile> row in CurrentLevel.TileSheet)
-            {
-                foreach(Tile t in row)
-                {
-                    spriteBatch.Draw(t.Texture, new Vector2(x, y), Color.White);
-                    x += Tile.Width;
-                }
-                x = 0;
-                y += Tile.Height;
-            }
+            CurrentLevel.Draw(spriteBatch);
         }
     }
 }

@@ -1,4 +1,5 @@
-# SurvivalRPGGame
+﻿# SurvivalRPGGame
+=======
 InDevelopment 2D Island Survival RPG
 
 I am a project for learning C#, monogame, and coding fundementals. Hopefully I don't suck but we'll see.
@@ -16,3 +17,4 @@ Planned Feature List:
     Smelting
     Fishing
     Mod Support
+=======
