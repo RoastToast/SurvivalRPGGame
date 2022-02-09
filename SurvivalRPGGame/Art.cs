@@ -12,12 +12,14 @@ namespace SurvivalRPGGame
         public static Texture2D Player { get; private set; }
         public static Texture2D Crop { get; private set; }
         public static Texture2D Tile { get; private set; }
+        public static Texture2D Potato { get; private set; }
 
         public static void Load(ContentManager content)
         {
             Player = content.Load<Texture2D>("Player");
             Crop = content.Load<Texture2D>("Crop");
             Tile = content.Load<Texture2D>("Tile");
+            Potato = content.Load<Texture2D>("Potato");
         }
 
     }
