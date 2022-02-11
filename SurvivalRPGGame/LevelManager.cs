@@ -12,7 +12,7 @@ namespace SurvivalRPGGame
     /// Main Game Logic Class
     /// LevelManager handles all game logic, including tracking and updating all levels
     /// </summary>
-    public class LevelManager : DrawableGameComponent
+    public class LevelManager : GameComponent
     {
         private static Level CurrentLevel;
         private static Dictionary<KeyFunctions, Keys> ConfiguredKeys = new Dictionary<KeyFunctions, Keys>();
@@ -31,7 +31,7 @@ namespace SurvivalRPGGame
         // TODO: Load Levels from Save File
         public void Load()
         {
-            CurrentLevel = new MainIsland();
+            CurrentLevel = new MainIsland(Game);
 
             Item[] items = new Item[]{new Item(false, null, true, new Potato()), new Item(true, null, false, null)};
             foreach(Item i in items)

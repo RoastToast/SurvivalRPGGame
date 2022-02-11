@@ -12,7 +12,6 @@ namespace SurvivalRPGGame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        public ScreenManager Screens { get; private set; }
         public LevelManager Levels { get; private set; }
 
         public SurvivalRPGGame()
@@ -41,7 +40,6 @@ namespace SurvivalRPGGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            this.Components.Add(this.Screens = new ScreenManager(this, new StartScreen(this)));
             this.Components.Add(this.Levels = new LevelManager(this));
 
             base.Initialize();

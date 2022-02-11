@@ -13,7 +13,7 @@ namespace SurvivalRPGGame
         MainIsland = 0
     }
 
-    public abstract class Level
+    public abstract class Level : DrawableGameComponent
     {
         protected Texture2D LevelTexture;
         protected List<List<Tile>> TileSheet;
@@ -22,7 +22,8 @@ namespace SurvivalRPGGame
 
         protected bool isUpdating;
 
-        public Level()
+        public Level(Game game) 
+            : base(game)
         {
             TileSheet = new List<List<Tile>>();
             Entities = new List<Entity>();
