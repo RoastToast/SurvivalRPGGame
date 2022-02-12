@@ -24,6 +24,7 @@ namespace SurvivalRPGGame
 
         // Speed of movement
         public float Speed = 10f;
+        Inventory inventory;
 
         private Player()
         {
