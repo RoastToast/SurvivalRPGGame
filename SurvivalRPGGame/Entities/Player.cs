@@ -25,9 +25,6 @@ namespace SurvivalRPGGame
         // Speed of movement
         public float Speed = 10f;
 
-        private Inventory inventory;
-
-
         private Player()
         {
             this._texture = Art.Player;
