@@ -12,10 +12,13 @@ namespace SurvivalRPGGame
     /// Main Game Logic Class
     /// LevelManager handles all game logic, including tracking and updating all levels
     /// </summary>
-    public class LevelManager : GameComponent
+    public class LevelManager : DrawableGameComponent
     {
         private static Level CurrentLevel;
         private static Dictionary<KeyFunctions, Keys> ConfiguredKeys = new Dictionary<KeyFunctions, Keys>();
+
+        bool isInitialized;
+        bool running;
 
         public LevelManager(Game game)
             : base(game)
@@ -25,7 +28,8 @@ namespace SurvivalRPGGame
 
         public override void Initialize()
         {
-            base.Initialize();
+            running = true;
+            isInitialized = true;
         }
 
         // TODO: Load Levels from Save File
@@ -52,20 +56,21 @@ namespace SurvivalRPGGame
 
         public override void Update(GameTime gameTime)
         {
-            CheckKeyPresses();
-            CurrentLevel.Update();
+            if (running)
+            {
+                CurrentLevel.Update(gameTime);
+            }
         }
 
-        //
-        // Summary:
-        //     Check predefined keys and call logic for those keys
-        //
-        private void CheckKeyPresses()
+        /// <summary>
+        /// Check configured keys and call corrosponding methods
+        /// </summary>
+        public void HandleInput()
         {
             if (Input.WasKeyPressed(ConfiguredKeys[KeyFunctions.Action]))
             {
                 CurrentLevel.Action(Player.Instance.GetActiveItem(), Player.Instance.GetTile());
-            } 
+            }
             //else if (Input.WasKeyPressed(ConfiguredKeys[KeyFunctions.Action2]))
             //{
             //
@@ -75,12 +80,12 @@ namespace SurvivalRPGGame
             {
                 Player.Instance.ShiftActiveItem();
             }
-
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+
+        public override void Draw(GameTime gameTime)
         {
-            CurrentLevel.Draw(spriteBatch);
+            CurrentLevel.Draw(gameTime);
         }
     }
 }

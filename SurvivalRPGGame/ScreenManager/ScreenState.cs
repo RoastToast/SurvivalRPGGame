@@ -7,6 +7,8 @@ namespace SurvivalRPGGame
     public enum ScreenState
     {
         TransitionOn,
-        Active
+        Active,
+        InActive,
+        Paused
     }
 }

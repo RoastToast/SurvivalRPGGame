@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,20 +21,34 @@ namespace SurvivalRPGGame
         Stack<GameScreen> Screens = new Stack<GameScreen>();
         Stack<GameScreen> ScreensToUpdate = new Stack<GameScreen>();
 
-        InputState input = new InputState();
-
         bool isInitialized;
+        private static SpriteBatch _spriteBatch;
+        public static SpriteBatch SpriteBatch
+        {
+            get => _spriteBatch;
+        }
+
+        private SpriteFont _font;
+        public SpriteFont SpriteFont
+        {
+            get => _font;
+        }
+
+        private Texture2D _blankTexture;
+        public Texture2D BlankTexture
+        {
+            get => _blankTexture;
+        }
 
         public ScreenManager(Game game)
             : base(game)
         {
-
+            
         }
 
         public override void Initialize()
         {
-            base.Initialize();
-
+            LoadContent();
             foreach (GameScreen gs in Screens)
             {
                 gs.Initialize();
@@ -41,26 +57,33 @@ namespace SurvivalRPGGame
             isInitialized = true;
         }
 
+        /// <summary>
+        /// Load your graphics content.
+        /// </summary>
+        public new void LoadContent()
+        {
+            // Load content belonging to the screen manager.
+            ContentManager content = Game.Content;
+
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            foreach(GameScreen screen in Screens)
+            {
+                screen.LoadContent();
+            }
+        }
+
+        /// <summary>
+        /// Update all active screens in the stack. The first active screen handles input.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
-
-            // Make a copy of the master screen list, to avoid confusion if
-            // the process of updating one screen adds or removes others.
-            ScreensToUpdate.Clear();
-
-            foreach (GameScreen gs in Screens)
-            {
-                ScreensToUpdate.Push(gs);
-            }
-
             bool screenHasFocus = Game.IsActive;
             bool coveredByOtherScreen = false;
 
-            while (ScreensToUpdate.Count > 0)
+            foreach(GameScreen screen in Screens) 
             {
-                GameScreen screen = ScreensToUpdate.Pop();
-
                 screen.Update(gameTime, screenHasFocus, coveredByOtherScreen);
 
                 if (screen.ScreenState == ScreenState.TransitionOn ||
@@ -70,7 +93,7 @@ namespace SurvivalRPGGame
                     // give it a chance to handle input.
                     if (screenHasFocus)
                     {
-                        screen.HandleInput(input);
+                        screen.HandleInput();
 
                         screenHasFocus = false;
                     }
@@ -83,16 +106,32 @@ namespace SurvivalRPGGame
             }
         }
 
+        /// <summary>
+        /// Draw all visible screens starting at the bottom of the stack.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
+            _spriteBatch.Begin();
+            foreach(GameScreen gs in Screens)
+            {
+                gs.Draw(gameTime);
+            }
+            _spriteBatch.End();
         }
 
+        /// <summary>
+        /// Push new screen to the top of the stack
+        /// </summary>
+        /// <param name="screen"></param>
         public void push(GameScreen screen)
         {
             Screens.Push(screen);
         }
 
+        /// <summary>
+        /// Pop the top screen off of the stack
+        /// </summary>
         public void pop()
         {
             Screens.Pop();

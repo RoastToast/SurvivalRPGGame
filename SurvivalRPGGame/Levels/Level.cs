@@ -132,7 +132,7 @@ namespace SurvivalRPGGame
         //    }
         //}
 
-        public void Update()
+        public override void Update(GameTime gameTime)
         {
             // Set isUpdating to true to stop any changes to this level's entities
             this.isUpdating = true;
@@ -164,10 +164,10 @@ namespace SurvivalRPGGame
         // Summary
         //     Draw this Level
         //
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime)
         {
-            DrawTiles(spriteBatch);
-            DrawEntities(spriteBatch);
+            DrawTiles(ScreenManager.SpriteBatch);
+            DrawEntities(ScreenManager.SpriteBatch);
         }
 
         //

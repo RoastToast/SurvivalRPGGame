@@ -12,7 +12,12 @@ namespace SurvivalRPGGame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        public LevelManager Levels { get; private set; }
+        /// <summary>
+        /// The manager for all of the user-interface data.
+        /// </summary>
+        ScreenManager screenManager;
+        LevelManager levelManager;
+
 
         public SurvivalRPGGame()
         {
@@ -40,7 +45,15 @@ namespace SurvivalRPGGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            this.Components.Add(this.Levels = new LevelManager(this));
+            screenManager = new ScreenManager(this);
+            levelManager = new LevelManager(this);
+
+            screenManager.Initialize();
+            levelManager.Initialize();
+
+            GameScreen gs = new GameplayScreen(this, levelManager);
+            gs.Initialize();
+            screenManager.push(gs);
 
             base.Initialize();
         }
@@ -51,7 +64,8 @@ namespace SurvivalRPGGame
 
             // TODO: use this.Content to load your game content here
             Art.Load(Content);
-            this.Levels.Load();
+
+            screenManager.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)
@@ -62,6 +76,7 @@ namespace SurvivalRPGGame
 
             if (Input.WasExitPressed())
                 Exit();
+            screenManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -72,7 +87,7 @@ namespace SurvivalRPGGame
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            this.Levels.Draw(_spriteBatch);
+            screenManager.Draw(gameTime);
             _spriteBatch.End();
 
             base.Draw(gameTime);
