@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿// © 2022 David Alger <RoastToast-gh@protonmail.com>
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,6 +11,13 @@ namespace SurvivalRPGGame
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        /// <summary>
+        /// The manager for all of the user-interface data.
+        /// </summary>
+        ScreenManager screenManager;
+        LevelManager levelManager;
+
 
         public SurvivalRPGGame()
         {
@@ -37,10 +45,17 @@ namespace SurvivalRPGGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            screenManager = new ScreenManager(this);
+            levelManager = new LevelManager(this);
+
+            screenManager.Initialize();
+            levelManager.Initialize();
+
+            GameScreen gs = new GameplayScreen(this, levelManager);
+            gs.Initialize();
+            screenManager.push(gs);
 
             base.Initialize();
-
-            LevelManager.Load();
         }
 
         protected override void LoadContent()
@@ -49,6 +64,8 @@ namespace SurvivalRPGGame
 
             // TODO: use this.Content to load your game content here
             Art.Load(Content);
+
+            screenManager.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)
@@ -56,10 +73,10 @@ namespace SurvivalRPGGame
 
             // TODO: Add your update logic here
             Input.Update();
-            LevelManager.Update();
 
             if (Input.WasExitPressed())
                 Exit();
+            screenManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -70,10 +87,11 @@ namespace SurvivalRPGGame
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
-            LevelManager.Draw(_spriteBatch);
+            screenManager.Draw(gameTime);
             _spriteBatch.End();
 
             base.Draw(gameTime);
         }
     }
+
 }

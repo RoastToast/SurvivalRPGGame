@@ -1,7 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿// © 2022 David Alger <RoastToast-gh@protonmail.com>
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace SurvivalRPGGame
@@ -23,11 +25,35 @@ namespace SurvivalRPGGame
         // Speed of movement
         public float Speed = 10f;
 
+        private Inventory inventory;
+
+
         private Player()
         {
-            _texture = Art.Player;
+            this._texture = Art.Player;
 
-            Position = new Vector2(0, 0);
+            this.Position = new Vector2(0, 0);
+            this.inventory = Inventory.Instance;
+        }
+
+        public Item GetActiveItem()
+        {
+            return this.inventory.GetActiveItem();
+        }
+
+        public void ShiftActiveItem()
+        {
+            this.inventory.ShiftActiveItem();
+        }
+
+        public void AddItemToInventory(Item item)
+        {
+            this.inventory.AddItemToInventory(item);
+        }
+
+        public void RemoveItemFromInventory(Item item, int count = 1)
+        {
+            this.inventory.RemoveItemFromInventory(item, count);
         }
 
         public override void Update()
@@ -54,6 +80,5 @@ namespace SurvivalRPGGame
                 Position = new Vector2(x, y);
             }
         }
-
     }
 }

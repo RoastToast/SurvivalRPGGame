@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SurvivalRPGGame
+namespace SurvivalRPGGame.Screens
 {
-    public abstract class Enemy : Entity
+    class MenuScreen
     {
     }
 }

@@ -5,7 +5,8 @@ using System.Text;
 
 namespace SurvivalRPGGame
 {
-    public class Effects
+    public interface IHarvestable
     {
+        public Item Harvest(Tool tool);
     }
 }

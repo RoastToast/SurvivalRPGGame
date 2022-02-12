@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SurvivalRPGGame
 {
-    public abstract class Building : Entity
+    class LoadingScreen
     {
     }
 }

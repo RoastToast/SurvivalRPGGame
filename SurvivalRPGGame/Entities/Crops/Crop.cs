@@ -5,7 +5,9 @@ using System.Text;
 
 namespace SurvivalRPGGame
 {
-    public class Effects
+    public abstract class Crop : Entity, IHarvestable
     {
+        public abstract Crop GetInstance();
+        public abstract Item Harvest(Tool tool);
     }
 }
