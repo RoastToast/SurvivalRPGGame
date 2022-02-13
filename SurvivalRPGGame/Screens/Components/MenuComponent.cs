@@ -84,7 +84,7 @@ namespace SurvivalRPGGame
             return Input.WasKeyPressed(theKey);
         }
  
-        public override void Update(GameTime gameTime)
+        public string HandleInput()
         {
             if (CheckKey(Keys.Down))
             {
@@ -98,7 +98,19 @@ namespace SurvivalRPGGame
                 if (selectedIndex < 0)
                     selectedIndex = menuItems.Length - 1;
             }
+            if (CheckKey(Keys.Enter))
+            {
+                return menuItems[selectedIndex];
+            }
+
+            return String.Empty;
         }
+
+        public override void Update(GameTime gameTime)
+        {
+            
+        }
+
         public override void Draw(GameTime gameTime)
         {
             Vector2 location = position;

@@ -28,7 +28,7 @@ namespace SurvivalRPGGame
             }
         }
 
-        public void Update(GameTime gameTime, bool screenHasFocus, bool coveredByOtherScreen)
+        public virtual void Update(GameTime gameTime, bool screenHasFocus, bool coveredByOtherScreen)
         {
             foreach (GameComponent gc in gameComponents)
             {

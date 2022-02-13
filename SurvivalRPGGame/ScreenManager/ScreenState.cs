@@ -9,6 +9,7 @@ namespace SurvivalRPGGame
         TransitionOn,
         Active,
         InActive,
-        Paused
+        Paused,
+        DisposeMe
     }
 }

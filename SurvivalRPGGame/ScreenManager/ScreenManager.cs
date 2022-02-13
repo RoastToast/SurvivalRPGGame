@@ -103,6 +103,10 @@ namespace SurvivalRPGGame
                         coveredByOtherScreen = true;
                 }
             }
+            if(Screens.Peek().ScreenState == ScreenState.DisposeMe)
+            {
+                Screens.Pop();
+            }
         }
 
         /// <summary>

@@ -12,45 +12,57 @@ namespace SurvivalRPGGame
     /// Main Game Logic Class
     /// LevelManager handles all game logic, including tracking and updating all levels
     /// </summary>
-    public class LevelManager : VisualComponent
+    public class LevelManager
     {
         /// <summary>
         /// The level the player is currently in
         /// </summary>
-        private static Level CurrentLevel;
+        private Level CurrentLevel;
 
         /// <summary>
         /// Maps keys from MonoGame Keys to this Game's Functional Keys
         /// </summary>
-        private static Dictionary<KeyFunctions, Keys> ConfiguredKeys = new Dictionary<KeyFunctions, Keys>();
+        private Dictionary<KeyFunctions, Keys> ConfiguredKeys = new Dictionary<KeyFunctions, Keys>();
 
-        SpriteBatch spriteBatch;
-        SpriteFont spriteFont;
+        private static LevelManager instance;
+        public static LevelManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new LevelManager();
+
+                return instance;
+            }
+        }
+
+        private SpriteBatch spriteBatch;
+        private SpriteFont spriteFont;
 
         /// <summary>
         /// If true, the configuration file has been loaded
         /// </summary>
-        bool _isInitialized;
+        private bool _isInitialized;
         /// <summary>
         /// Controls Update Logic, if true the CurrentLevel will update
         /// </summary>
-        bool _running;
+        private bool _running;
+        /// <summary>
+        /// Controls Draw Logic
+        /// </summary>
+        private bool _active;
 
-        public LevelManager(Game game,
-            SpriteBatch spriteBatch,
-            SpriteFont spriteFont)
-            : base(game)
+        public LevelManager()
         {
-            this.spriteBatch = spriteBatch;
-            this.spriteFont = spriteFont;
+            this._active = false;
+            this._running = false;
         }
 
         /// <summary>
         /// Initialized the class with values from configuration file
         /// </summary>
-        public override void Initialize()
+        public void Initialize()
         {
-            _running = true;
             _isInitialized = true;
         }
 
@@ -73,7 +85,7 @@ namespace SurvivalRPGGame
         /// <summary>
         /// Save Levels to a save file
         /// </summary>
-        public void Load()
+        public void Load(int SaveSlot)
         {
             CurrentLevel = new MainIsland();
 
@@ -86,21 +98,25 @@ namespace SurvivalRPGGame
             ConfiguredKeys.Add(KeyFunctions.Action, Keys.E);
             ConfiguredKeys.Add(KeyFunctions.Action2, Keys.F);
             ConfiguredKeys.Add(KeyFunctions.ChangeTool, Keys.R);
+
+            this._running = true;
+            this._active = true;
         }
 
         /// <summary>
         /// Save Levels to a save file
         /// </summary>
-        public void Save()
+        public void Save(int SaveSlot)
         {
-
+            this._running = false;
+            this._active = false;
         }
 
         /// <summary>
         /// Updates the Current Level
         /// </summary>
         /// <param name="gameTime"></param>
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             if (_running)
             {
@@ -132,9 +148,12 @@ namespace SurvivalRPGGame
         /// Draws the Current Level
         /// </summary>
         /// <param name="gameTime"></param>
-        public override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
-            CurrentLevel.Draw(gameTime);
+            if (_active)
+            {
+                CurrentLevel.Draw(gameTime);
+            }
         }
     }
 }

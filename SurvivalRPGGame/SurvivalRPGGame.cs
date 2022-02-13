@@ -54,6 +54,8 @@ namespace SurvivalRPGGame
             // gs.Initialize();
             // screenManager.push(gs);
 
+            GameScreen gameplayScreen = new GameplayScreen(this);
+            screenManager.push(gameplayScreen);
             GameScreen MainMenuScreen = new MainMenuScreen(this);
             screenManager.push(MainMenuScreen);
 

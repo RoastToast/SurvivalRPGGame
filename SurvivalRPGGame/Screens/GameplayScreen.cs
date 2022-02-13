@@ -10,27 +10,44 @@ namespace SurvivalRPGGame
     /// </summary>
     class GameplayScreen : GameScreen
     {
-
-        public GameplayScreen(Game game, LevelManager levelManager)
+        public GameplayScreen(Game game)
             : base(game)
         {
-            this.gameComponents.Add(levelManager);
+            this.ScreenState = ScreenState.Active;
+            this.IsPopup = false;
         }
+
+        public override void Initialize()
+        {
+            LevelManager.Instance.Initialize();
+        }
+
 
         public override void LoadContent()
         {
-            LevelManager levelManager = gameComponents[0] as LevelManager;
-            levelManager?.Load();
+
         }
         public override void UnloadContent()
         {
             
         }
 
+        public override void Update(GameTime gameTime, bool screenHasFocus, bool coveredByOtherScreen)
+        {
+            if (screenHasFocus)
+            {
+                LevelManager.Instance.Update(gameTime);
+            }
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            LevelManager.Instance.Draw(gameTime);
+        }
+
         public override void HandleInput()
         {
-            LevelManager levelManager = gameComponents[0] as LevelManager;
-            levelManager?.HandleInput();
+            LevelManager.Instance.HandleInput();
         }
     }
 }
