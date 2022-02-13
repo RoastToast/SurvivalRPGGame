@@ -11,6 +11,9 @@ namespace SurvivalRPGGame
     public class Player : Entity
     {
         private static Player instance;
+        /// <summary>
+        /// Gets an instance of the player or creates a new one if none exists
+        /// </summary>
         public static Player Instance
         {
             get
@@ -22,8 +25,13 @@ namespace SurvivalRPGGame
             }
         }
 
-        // Speed of movement
+        /// <summary>
+        /// Speed Coefficient
+        /// </summary>
         public float Speed = 10f;
+        /// <summary>
+        /// The Player's inventory
+        /// </summary>
         Inventory inventory;
 
         private Player()
@@ -34,26 +42,45 @@ namespace SurvivalRPGGame
             this.inventory = Inventory.Instance;
         }
 
+        /// <summary>
+        /// Get the player's active item in the hotbar
+        /// </summary>
+        /// <returns></returns>
         public Item GetActiveItem()
         {
             return this.inventory.GetActiveItem();
         }
 
+        /// <summary>
+        /// Change the player's active item in the hotbar
+        /// </summary>
         public void ShiftActiveItem()
         {
             this.inventory.ShiftActiveItem();
         }
 
+        /// <summary>
+        /// Add an item to the player's inventory
+        /// </summary>
+        /// <param name="item"></param>
         public void AddItemToInventory(Item item)
         {
             this.inventory.AddItemToInventory(item);
         }
 
+        /// <summary>
+        /// Remove an item from the player's inventory
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="count"></param>
         public void RemoveItemFromInventory(Item item, int count = 1)
         {
             this.inventory.RemoveItemFromInventory(item, count);
         }
 
+        /// <summary>
+        /// Update the player
+        /// </summary>
         public override void Update()
         {
             float x = 0f;

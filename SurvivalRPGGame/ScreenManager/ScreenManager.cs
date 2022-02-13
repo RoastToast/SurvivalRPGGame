@@ -16,7 +16,7 @@ namespace SurvivalRPGGame
     /// https://github.com/CartBlanche/MonoGame-Samples/blob/master/GameStateManagement/Screens/GameplayScreen.cs
     /// by CarteBlanche
     /// </summary>
-    class ScreenManager : DrawableGameComponent
+    class ScreenManager : VisualComponent
     {
         Stack<GameScreen> Screens = new Stack<GameScreen>();
         Stack<GameScreen> ScreensToUpdate = new Stack<GameScreen>();
@@ -48,7 +48,6 @@ namespace SurvivalRPGGame
 
         public override void Initialize()
         {
-            LoadContent();
             foreach (GameScreen gs in Screens)
             {
                 gs.Initialize();

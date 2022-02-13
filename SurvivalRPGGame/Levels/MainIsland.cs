@@ -8,8 +8,7 @@ namespace SurvivalRPGGame
 {
     public class MainIsland : Level
     {
-        public MainIsland(Game game)
-            : base(game)
+        public MainIsland()
         {
             TileSheet = new List<List<Tile>>();
             for (int i = 0; i < 20; i++)

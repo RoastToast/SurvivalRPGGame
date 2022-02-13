@@ -5,6 +5,9 @@ using System.Text;
 
 namespace SurvivalRPGGame
 {
+    /// <summary>
+    /// The main GamePlay screen. Draws the level and all of the fun parts of a game
+    /// </summary>
     class GameplayScreen : GameScreen
     {
 
@@ -18,6 +21,10 @@ namespace SurvivalRPGGame
         {
             LevelManager levelManager = gameComponents[0] as LevelManager;
             levelManager?.Load();
+        }
+        public override void UnloadContent()
+        {
+            
         }
 
         public override void HandleInput()

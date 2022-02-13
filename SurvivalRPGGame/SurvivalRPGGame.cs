@@ -46,14 +46,19 @@ namespace SurvivalRPGGame
         {
             // TODO: Add your initialization logic here
             screenManager = new ScreenManager(this);
-            levelManager = new LevelManager(this);
+            // levelManager = new LevelManager(this);
+
+            // levelManager.Initialize();
+
+            // GameScreen gs = new GameplayScreen(this, levelManager);
+            // gs.Initialize();
+            // screenManager.push(gs);
+
+            GameScreen MainMenuScreen = new MainMenuScreen(this);
+            screenManager.push(MainMenuScreen);
+
 
             screenManager.Initialize();
-            levelManager.Initialize();
-
-            GameScreen gs = new GameplayScreen(this, levelManager);
-            gs.Initialize();
-            screenManager.push(gs);
 
             base.Initialize();
         }

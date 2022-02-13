@@ -13,7 +13,7 @@ namespace SurvivalRPGGame
         MainIsland = 0
     }
 
-    public abstract class Level : DrawableGameComponent
+    public abstract class Level
     {
         protected Texture2D LevelTexture;
         protected List<List<Tile>> TileSheet;
@@ -22,8 +22,7 @@ namespace SurvivalRPGGame
 
         protected bool isUpdating;
 
-        public Level(Game game) 
-            : base(game)
+        public Level()
         {
             TileSheet = new List<List<Tile>>();
             Entities = new List<Entity>();
@@ -132,7 +131,7 @@ namespace SurvivalRPGGame
         //    }
         //}
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             // Set isUpdating to true to stop any changes to this level's entities
             this.isUpdating = true;
@@ -164,7 +163,7 @@ namespace SurvivalRPGGame
         // Summary
         //     Draw this Level
         //
-        public override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
             DrawTiles(ScreenManager.SpriteBatch);
             DrawEntities(ScreenManager.SpriteBatch);

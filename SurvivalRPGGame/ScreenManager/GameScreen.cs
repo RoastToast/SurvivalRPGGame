@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SurvivalRPGGame
 {
-    public abstract class GameScreen : DrawableGameComponent
+    public abstract class GameScreen : VisualComponent
     {
         public ScreenState ScreenState;
         public bool IsPopup;
@@ -28,10 +28,6 @@ namespace SurvivalRPGGame
             }
         }
 
-        public new virtual void LoadContent() { }
-
-        public new virtual void UnloadContent() { }
-
         public void Update(GameTime gameTime, bool screenHasFocus, bool coveredByOtherScreen)
         {
             foreach (GameComponent gc in gameComponents)
@@ -44,7 +40,7 @@ namespace SurvivalRPGGame
         {
             foreach (GameComponent gc in gameComponents)
             {
-                DrawableGameComponent dgc = gc as DrawableGameComponent;
+                VisualComponent dgc = gc as VisualComponent;
                 dgc?.Draw(gameTime);
             }
         }

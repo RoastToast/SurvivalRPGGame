@@ -15,6 +15,9 @@ namespace SurvivalRPGGame
 
 		public static Vector2 MousePosition { get { return new Vector2(mouseState.X, mouseState.Y); } }
 
+		/// <summary>
+		/// Get keyboard, mouse, and gamepad state every frame
+		/// </summary>
 		public static void Update()
 		{
 			lastKeyboardState = keyboardState;
@@ -26,22 +29,39 @@ namespace SurvivalRPGGame
 			gamepadState = GamePad.GetState(PlayerIndex.One);
 		}
 
-		// Checks if a key was just pressed down
+		/// <summary>
+		/// Checks if the key was pressed this cycle
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
 		public static bool WasKeyPressed(Keys key)
 		{
 			return lastKeyboardState.IsKeyUp(key) && keyboardState.IsKeyDown(key);
 		}
 
+		/// <summary>
+		/// Checks if the button was pressed this cycle
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
 		public static bool WasButtonPressed(Buttons button)
 		{
 			return lastGamepadState.IsButtonUp(button) && gamepadState.IsButtonDown(button);
 		}
 
+		/// <summary>
+		/// Checks if the Exit Key was Pressed
+		/// </summary>
+		/// <returns></returns>
 		public static bool WasExitPressed()
 		{
 			return keyboardState.IsKeyDown(Keys.Escape);
 		}
 
+		/// <summary>
+		/// Gets Direction of movement, left/right and up/down
+		/// </summary>
+		/// <returns></returns>
 		public static Vector2 GetMovementDirection()
 		{
 
