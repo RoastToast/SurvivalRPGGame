@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿// © 2022 David Alger <RoastToast-gh@protonmail.com>
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -38,11 +39,13 @@ namespace SurvivalRPGGame
 
         public override void Draw(GameTime gameTime)
         {
+            ScreenManager.SpriteBatch.Begin(transformMatrix: Resolution.ScaleMatrix);
             foreach (GameComponent gc in gameComponents)
             {
                 VisualComponent dgc = gc as VisualComponent;
                 dgc?.Draw(gameTime);
             }
+            ScreenManager.SpriteBatch.End();
         }
 
         public abstract void HandleInput();

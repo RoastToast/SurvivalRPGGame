@@ -16,14 +16,18 @@ namespace SurvivalRPGGame
         /// The manager for all of the user-interface data.
         /// </summary>
         ScreenManager screenManager;
-        LevelManager levelManager;
+        GameConfig gameConfig;
+        Resolution resolution;
 
 
         public SurvivalRPGGame()
         {
             _graphics = new GraphicsDeviceManager(this);
+            this.Window.ClientSizeChanged += delegate { Resolution.WasResized = true; };
+            this.Window.IsBorderless = true;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            screenManager = new ScreenManager(this);
         }
 
         // Window is in focus
@@ -45,34 +49,31 @@ namespace SurvivalRPGGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            screenManager = new ScreenManager(this);
-            // levelManager = new LevelManager(this);
+            GameConfig.Initialize();
+            Resolution.Initialize(_graphics);
 
-            // levelManager.Initialize();
 
-            // GameScreen gs = new GameplayScreen(this, levelManager);
-            // gs.Initialize();
-            // screenManager.push(gs);
 
             GameScreen gameplayScreen = new GameplayScreen(this);
-            screenManager.push(gameplayScreen);
+            this.screenManager.push(gameplayScreen);
             GameScreen MainMenuScreen = new MainMenuScreen(this);
-            screenManager.push(MainMenuScreen);
+            this.screenManager.push(MainMenuScreen);
 
 
-            screenManager.Initialize();
+            this.screenManager.Initialize();
+
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            this._spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
             Art.Load(Content);
 
-            screenManager.LoadContent();
+            this.screenManager.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)
@@ -83,7 +84,11 @@ namespace SurvivalRPGGame
 
             if (Input.WasExitPressed())
                 Exit();
-            screenManager.Update(gameTime);
+
+            Resolution.Update(this, _graphics);
+            GameConfig.Update();
+            this.screenManager.Update(gameTime);
+
 
             base.Update(gameTime);
         }
@@ -93,9 +98,9 @@ namespace SurvivalRPGGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            _spriteBatch.Begin();
-            screenManager.Draw(gameTime);
-            _spriteBatch.End();
+            this._spriteBatch.Begin();
+            this.screenManager.Draw(gameTime);
+            this._spriteBatch.End();
 
             base.Draw(gameTime);
         }

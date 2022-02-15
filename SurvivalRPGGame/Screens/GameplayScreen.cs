@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿// © 2022 David Alger <RoastToast-gh@protonmail.com>
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,11 +11,13 @@ namespace SurvivalRPGGame
     /// </summary>
     class GameplayScreen : GameScreen
     {
+        Camera camera;
         public GameplayScreen(Game game)
             : base(game)
         {
             this.ScreenState = ScreenState.Active;
             this.IsPopup = false;
+            camera = new Camera();
         }
 
         public override void Initialize()
@@ -37,12 +40,15 @@ namespace SurvivalRPGGame
             if (screenHasFocus)
             {
                 LevelManager.Instance.Update(gameTime);
+                camera.Follow(Player.Instance);
             }
         }
 
         public override void Draw(GameTime gameTime)
         {
+            ScreenManager.SpriteBatch.Begin(transformMatrix: camera.Transform);
             LevelManager.Instance.Draw(gameTime);
+            ScreenManager.SpriteBatch.End();
         }
 
         public override void HandleInput()

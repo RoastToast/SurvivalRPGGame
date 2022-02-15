@@ -14,6 +14,10 @@ namespace SurvivalRPGGame
         protected Color _color = Color.White;
 
         public Vector2 Position { get; set; }
+        public Rectangle Rectangle
+        {
+            get { return new Rectangle((int)Position.X, (int)Position.Y, _texture.Width, _texture.Height); }
+        }
         // true if the entity was destroyed and should be deleted.
         public bool isExpired { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿// © 2022 David Alger <RoastToast-gh@protonmail.com>
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -59,8 +60,8 @@ namespace SurvivalRPGGame
             }
  
             position = new Vector2(
-                (Game.Window.ClientBounds.Width - width) / 2,
-                (Game.Window.ClientBounds.Height - height) / 2);
+                (Resolution.GameWidth - width) / 2,
+                (Resolution.GameHeight - height) / 2);
         }
  
         public override void Initialize()

@@ -58,6 +58,11 @@ namespace SurvivalRPGGame
 			return keyboardState.IsKeyDown(Keys.Escape);
 		}
 
+		public static float GetScrollWheel()
+        {
+			return mouseState.ScrollWheelValue - lastMouseState.ScrollWheelValue;
+		}
+
 		/// <summary>
 		/// Gets Direction of movement, left/right and up/down
 		/// </summary>

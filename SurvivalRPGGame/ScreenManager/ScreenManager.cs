@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿// © 2022 David Alger <RoastToast-gh@protonmail.com>
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -115,12 +116,10 @@ namespace SurvivalRPGGame
         /// <param name="gameTime"></param>
         public override void Draw(GameTime gameTime)
         {
-            _spriteBatch.Begin();
             foreach(GameScreen gs in Screens)
             {
                 gs.Draw(gameTime);
             }
-            _spriteBatch.End();
         }
 
         /// <summary>
