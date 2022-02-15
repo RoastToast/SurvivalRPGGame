@@ -17,5 +17,6 @@ Planned Feature List:
     Fishing
     Mod Support
 
-https://user-images.githubusercontent.com/68855589/153972230-af9f4eb9-e90b-4821-a03c-e50fad494b28.mp4
+
+https://user-images.githubusercontent.com/68855589/153975840-09140fa2-f080-4d2c-92e3-f67ea1f94640.mp4
 
