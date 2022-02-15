@@ -62,8 +62,8 @@ namespace SurvivalRPGGame
               Position.Y,
               0);
             var offset = Matrix.CreateTranslation(
-                Resolution.GameWidth / 2,
-                Resolution.GameHeight / 2,
+                Resolution.GameWidth / zoom / 2,
+                Resolution.GameHeight / zoom / 2,
                 0);
 
             Transform = position
