@@ -20,5 +20,6 @@ Planned Feature List:
 
 
 Hotbar Demo:
+
 https://user-images.githubusercontent.com/68855589/154194939-7e7b5945-3945-47f6-890d-8a8476029204.mp4
 
