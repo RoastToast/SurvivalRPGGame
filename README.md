@@ -18,5 +18,7 @@ Planned Feature List:
     Mod Support
 
 
-https://user-images.githubusercontent.com/68855589/153975840-09140fa2-f080-4d2c-92e3-f67ea1f94640.mp4
+
+Hotbar Demo:
+https://user-images.githubusercontent.com/68855589/154194939-7e7b5945-3945-47f6-890d-8a8476029204.mp4
 
