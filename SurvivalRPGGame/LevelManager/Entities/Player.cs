@@ -36,10 +36,15 @@ namespace SurvivalRPGGame
 
         private Player()
         {
-            this._texture = Art.Player;
+            this.Texture = Art.Player;
 
             this.Position = new Vector2(0, 0);
-            this.inventory = Inventory.Instance;
+            this.inventory = new Inventory();
+        }
+
+        public List<Item> GetHotbar()
+        {
+            return inventory.Hotbar;
         }
 
         /// <summary>

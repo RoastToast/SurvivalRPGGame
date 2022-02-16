@@ -19,7 +19,7 @@ namespace SurvivalRPGGame
     /// </summary>
     class ScreenManager : VisualComponent
     {
-        Stack<GameScreen> Screens = new Stack<GameScreen>();
+        List<GameScreen> Screens = new List<GameScreen>();
         Stack<GameScreen> ScreensToUpdate = new Stack<GameScreen>();
 
         bool isInitialized;
@@ -82,7 +82,13 @@ namespace SurvivalRPGGame
             bool screenHasFocus = Game.IsActive;
             bool coveredByOtherScreen = false;
 
-            foreach(GameScreen screen in Screens) 
+            ScreensToUpdate.Clear();
+            foreach(GameScreen screen in Screens)
+            {
+                ScreensToUpdate.Push(screen);
+            }
+
+            foreach(GameScreen screen in ScreensToUpdate) 
             {
                 screen.Update(gameTime, screenHasFocus, coveredByOtherScreen);
 
@@ -104,9 +110,9 @@ namespace SurvivalRPGGame
                         coveredByOtherScreen = true;
                 }
             }
-            if(Screens.Peek().ScreenState == ScreenState.DisposeMe)
+            if(ScreenPeek().ScreenState == ScreenState.DisposeMe)
             {
-                Screens.Pop();
+                ScreenPop();
             }
         }
 
@@ -122,21 +128,28 @@ namespace SurvivalRPGGame
             }
         }
 
+        public GameScreen ScreenPeek()
+        {
+            return Screens[Screens.Count-1];
+        }
+
         /// <summary>
         /// Push new screen to the top of the stack
         /// </summary>
         /// <param name="screen"></param>
-        public void push(GameScreen screen)
+        public void ScreenPush(GameScreen screen)
         {
-            Screens.Push(screen);
+            Screens.Add(screen);
         }
 
         /// <summary>
         /// Pop the top screen off of the stack
         /// </summary>
-        public void pop()
+        public GameScreen ScreenPop()
         {
-            Screens.Pop();
+            GameScreen retval = Screens[Screens.Count - 1];
+            Screens.RemoveAt(Screens.Count - 1);
+            return retval;
         }
     }
 }

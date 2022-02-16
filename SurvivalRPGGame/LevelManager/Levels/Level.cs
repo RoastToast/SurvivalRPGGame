@@ -35,21 +35,24 @@ namespace SurvivalRPGGame
         //     
         public void Action(Item item, Vector2 Position)
         {
-            if (item.IsTool)
+
+            if (item is Tool)
             {
+                Tool tool = item as Tool;
                 Entity entity = Entities.Find(x => x.Position == Position);
                 IHarvestable harvestable = entity as IHarvestable;
                 if (harvestable != null)
                 {
-                    Item HarvestedItem = _Harvest(item.Tool, harvestable);
+                    Item HarvestedItem = _Harvest(tool, harvestable);
                     Player.Instance.AddItemToInventory(HarvestedItem);
                     Entities.Remove(entity);
                 }
                     
             }
-            else if (item.isSeed)
+            else if (item is Seed)
             {
-                if (_PlantCrop(item.SeedCrop, Position))
+                Seed seed = item as Seed;
+                if (_PlantCrop(seed, Position))
                 {
                     Player.Instance.RemoveItemFromInventory(item);
                 }
@@ -69,10 +72,10 @@ namespace SurvivalRPGGame
         // Summary
         //     If the current tile is empty, plant a crop at the location
         //     
-        private bool _PlantCrop(Crop SeedCrop, Vector2 Position)
+        private bool _PlantCrop(Seed seed, Vector2 Position)
         {
             bool Success = false;
-            Crop c = SeedCrop.GetInstance();
+            Crop c = seed.GetCrop();
             c.Position = Position;
             Entity Existing = this.Entities.Find(x => x.Position == Position);
             if (Existing == null || Existing.Equals(Player.Instance))
@@ -197,7 +200,7 @@ namespace SurvivalRPGGame
         {
             foreach (Entity e in this.Entities)
             {
-                e.Draw(spriteBatch);
+                spriteBatch.Draw(e.Texture, e.Position, Color.White);
             }
         }
     }

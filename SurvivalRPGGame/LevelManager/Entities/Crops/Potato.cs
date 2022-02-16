@@ -15,17 +15,17 @@ namespace SurvivalRPGGame
 
         public Potato()
         {
-            this._texture = Art.Potato;
+            this.Texture = Art.Potato;
         }
         public Potato(Vector2 Position)
         {
-            this._texture = Art.Potato;
+            this.Texture = Art.Potato;
 
             this.Position = Position;
         }
         public override Item Harvest(Tool tool)
         {
-            return new Item(false, null, true, GetInstance());
+            return new PotatoSeed();
         }
 
         public override void Update()

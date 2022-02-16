@@ -8,18 +8,6 @@ namespace SurvivalRPGGame
 {
     class Inventory
     {
-        private static Inventory _instance;
-        public static Inventory Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new Inventory();
-
-                return _instance;
-            }
-        }
-
         // TODO: Add Inventory System
         public List<Item> Hotbar;
         private int _activeItem;
@@ -33,9 +21,9 @@ namespace SurvivalRPGGame
         {
             _inventorySize = 10;
             this.Hotbar = new List<Item>();
-            for(int i = 0; i < _inventorySize; i++)
+            for (int i = 0; i < _inventorySize; i++)
             {
-                this.Hotbar.Add(new Item());
+                this.Hotbar.Add(new Empty());
             }
         }
 
@@ -65,11 +53,11 @@ namespace SurvivalRPGGame
 
         public void AddItemToInventory(Item item)
         {
-            int index = 0;
+            int index = -1;
 
-            if (item.isSeed)
+            if (item is Seed)
             {
-                index = this.Hotbar.FindIndex(x => x.SeedCrop?.GetType() == item.SeedCrop.GetType());
+                index = this.Hotbar.FindIndex(x => x.GetType() == item.GetType());
                 if (index >= 0)
                 {
                     item.Count += this.Hotbar[index].Count;
@@ -77,16 +65,16 @@ namespace SurvivalRPGGame
                 }
                 else
                 {
-                    index = this.Hotbar.FindIndex(x => x.Equals(new Item()));
+                    index = this.Hotbar.FindIndex(x => x.GetType() == new Empty().GetType());
                     if (index >= 0)
                     {
                         this.Hotbar[index] = item;
                     }
                 }
             }
-            else if (item.IsTool)
+            else if (item is Tool)
             {
-                index = this.Hotbar.FindIndex(x => x.Equals(new Item()));
+                index = this.Hotbar.FindIndex(x => x.GetType() == new Empty().GetType());
                 if (index >= 0)
                 {
                     this.Hotbar[index] = item;
@@ -96,7 +84,7 @@ namespace SurvivalRPGGame
 
         public void RemoveItemFromInventory(Item item, int count = 1)
         {
-            int index = this.Hotbar.FindIndex(x => x.SeedCrop?.GetType() == item.SeedCrop.GetType());
+            int index = this.Hotbar.FindIndex(x => x.GetType() == item.GetType());
             if (index >= 0)
             {
                 Item tempItem = this.Hotbar[index];
@@ -104,7 +92,7 @@ namespace SurvivalRPGGame
                 this.Hotbar[index] = tempItem;
                 Debug.Print("{0}", this.Hotbar[index].Count);
                 if (this.Hotbar[index].Count == 0)
-                    this.Hotbar[index] = new Item();
+                    this.Hotbar[index] = new Empty();
             }
         }
     }

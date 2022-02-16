@@ -46,7 +46,7 @@ namespace SurvivalRPGGame
         /// <summary>
         /// Controls Update Logic, if true the CurrentLevel will update
         /// </summary>
-        private bool _running;
+        public bool Running { get; set; }
         /// <summary>
         /// Controls Draw Logic
         /// </summary>
@@ -55,7 +55,7 @@ namespace SurvivalRPGGame
         public LevelManager()
         {
             this._active = false;
-            this._running = false;
+            this.Running = false;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace SurvivalRPGGame
         /// </summary>
         public void Pause()
         {
-            this._running = false;
+            this.Running = false;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace SurvivalRPGGame
         /// </summary>
         public void Resume()
         {
-            this._running = true;
+            this.Running = true;
         }
 
         /// <summary>
@@ -89,9 +89,9 @@ namespace SurvivalRPGGame
         {
             CurrentLevel = new MainIsland();
 
-            Item[] items = new Item[]{new Item(false, null, true, new Potato()), new Item(true, null, false, null)};
+            Item[] items = new Item[]{new PotatoSeed(), new Hatchet()};
             foreach(Item i in items)
-                Inventory.Instance.AddItemToInventory(i);
+                Player.Instance.AddItemToInventory(i);
 
             ConfiguredKeys.Add(KeyFunctions.PauseMenu, Keys.Escape);
             ConfiguredKeys.Add(KeyFunctions.Inventory, Keys.Tab);
@@ -99,7 +99,7 @@ namespace SurvivalRPGGame
             ConfiguredKeys.Add(KeyFunctions.Action2, Keys.F);
             ConfiguredKeys.Add(KeyFunctions.ChangeTool, Keys.R);
 
-            this._running = true;
+            this.Running = true;
             this._active = true;
         }
 
@@ -108,7 +108,7 @@ namespace SurvivalRPGGame
         /// </summary>
         public void Save(int SaveSlot)
         {
-            this._running = false;
+            this.Running = false;
             this._active = false;
         }
 
@@ -118,7 +118,7 @@ namespace SurvivalRPGGame
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
-            if (_running)
+            if (Running)
             {
                 CurrentLevel.Update(gameTime);
             }

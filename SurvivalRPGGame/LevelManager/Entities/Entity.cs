@@ -9,14 +9,15 @@ namespace SurvivalRPGGame
 {
     public abstract class Entity
     {
-        protected Texture2D _texture;
+        //TODO: Add _texture as Animation. Change Texture.get to return the texture for the current animation in the sequence
+        public Texture2D Texture { get; set; }
         // The tint of the image. This will also allow us to change the transparency.
         protected Color _color = Color.White;
 
         public Vector2 Position { get; set; }
         public Rectangle Rectangle
         {
-            get { return new Rectangle((int)Position.X, (int)Position.Y, _texture.Width, _texture.Height); }
+            get { return new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height); }
         }
         // true if the entity was destroyed and should be deleted.
         public bool isExpired { get; set; }
@@ -28,10 +29,5 @@ namespace SurvivalRPGGame
         }
 
         public abstract void Update();
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(_texture, Position, _color);
-        }
     }
 }
